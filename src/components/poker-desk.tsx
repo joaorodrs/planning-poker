@@ -33,7 +33,7 @@ const PokerDesk = () => {
       <div className="flex w-full justify-between">
         <div className="w-fit">
           <span className="text-gray-300">Junior</span>
-          <div className="bg-primary-300 rounded-full size-10 mt-1" />
+          <div className="bg-gray-200 rounded-full size-10 mt-1" />
         </div>
         <div className="w-fit">
           <span className="text-gray-300">Junior</span>
