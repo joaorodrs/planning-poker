@@ -1,7 +1,7 @@
 import { FormEvent, useCallback, useEffect } from 'react'
-import { getFirestore, addDoc, query, collection, getDoc, getDocs, where, doc } from 'firebase/firestore'
+import { getFirestore, addDoc, collection, getDoc, doc } from 'firebase/firestore'
 import { initializeApp } from 'firebase/app'
-import { redirect, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import 'firebase/auth'
 import 'firebase/firestore'
 
@@ -13,13 +13,13 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/componen
 import '@/App.css'
 
 const app = initializeApp({
-  apiKey: "AIzaSyCqFR6EqpSAB-DWH71JbKIpd-8aBrZoxEU",
-  authDomain: "planning-poker-8f949.firebaseapp.com",
-  projectId: "planning-poker-8f949",
-  storageBucket: "planning-poker-8f949.appspot.com",
-  messagingSenderId: "1010743575662",
-  appId: "1:1010743575662:web:586550692a56366160927f",
-  measurementId: "G-L6P8RTWEQ5"
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
+  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID,
 })
 
 const db = getFirestore(app);

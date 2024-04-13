@@ -4,7 +4,7 @@ import Deck from "@/components/deck"
 import Header from "@/components/header"
 import PokerDesk from "@/components/poker-desk"
 
-export default function Home() {
+export default function Session() {
   const [cardSelected, setCardSelected] = useState<number>()
 
   function onSelectCard(value?: number) {
