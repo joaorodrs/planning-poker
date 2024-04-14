@@ -4,14 +4,14 @@ import { useNavigate } from 'react-router-dom'
 import 'firebase/auth'
 import 'firebase/firestore'
 
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
+import useCollection from '@/hooks/useCollection'
+import useAuth from '@/hooks/useAuth'
 
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 
 import '@/App.css'
-import useCollection from '@/hooks/useCollection'
-import useDoc from '@/hooks/useDoc'
 
 type FormValues = {
   username: { value: string };
@@ -20,7 +20,7 @@ type FormValues = {
 export default function Home() {
   const navigate = useNavigate()
   const { collectionRef } = useCollection("user")
-  const { getDocRef } = useDoc("user")
+  const { user, getUser } = useAuth()
 
   async function onSubmit(event: FormEvent) {
     try {
@@ -43,6 +43,7 @@ export default function Home() {
 
       localStorage.setItem('@planning-poker:user', JSON.stringify(user))
 
+      await getUser()
       getData();
     } catch (err) {
       console.error(err)
@@ -50,20 +51,10 @@ export default function Home() {
   }
 
   const getData = useCallback(async () => {
-    const stringUser = localStorage.getItem('@planning-poker:user')
-
-    if (!stringUser) {
-      return
-    }
-
-    const user = JSON.parse(stringUser);
-
-    const docSnap = await getDoc(getDocRef(user.id))
-
-    if (docSnap.id) {
+    if (user?.id) {
       navigate('/session', { replace: false })
     }
-  }, [navigate, getDocRef])
+  }, [user, navigate])
 
   useEffect(() => {
     getData()

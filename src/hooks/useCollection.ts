@@ -5,8 +5,8 @@ import { useContext } from "react";
 function useCollection(collectionName: string) {
   const context = useContext(DatabaseContext)
 
-  function collection(segmentPath: string) {
-    return firestoreCollection(context.db, collectionName, segmentPath)
+  function collection(...segmentPath: string[]) {
+    return firestoreCollection(context.db, collectionName, ...segmentPath)
   }
 
   return {

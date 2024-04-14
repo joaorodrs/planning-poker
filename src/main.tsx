@@ -20,6 +20,10 @@ const router = createBrowserRouter([
     path: "/session",
     element: <Session />,
   },
+  {
+    path: "/session/:token",
+    element: <Session />,
+  },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
