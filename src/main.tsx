@@ -9,6 +9,7 @@ import Home from '@/pages/index'
 import Session from '@/pages/session'
 
 import "./index.css";
+import { DatabaseProvider } from "./contexts/database";
 
 const router = createBrowserRouter([
   {
@@ -23,6 +24,8 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <DatabaseProvider>
+      <RouterProvider router={router} />
+    </DatabaseProvider>
   </React.StrictMode>
 );

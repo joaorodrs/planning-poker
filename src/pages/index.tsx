@@ -1,6 +1,5 @@
 import { FormEvent, useCallback, useEffect } from 'react'
-import { getFirestore, addDoc, collection, getDoc, doc } from 'firebase/firestore'
-import { initializeApp } from 'firebase/app'
+import { addDoc, getDoc } from 'firebase/firestore'
 import { useNavigate } from 'react-router-dom'
 import 'firebase/auth'
 import 'firebase/firestore'
@@ -11,18 +10,8 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 
 import '@/App.css'
-
-const app = initializeApp({
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
-  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
-  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
-  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
-  appId: import.meta.env.VITE_FIREBASE_APP_ID,
-  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID,
-})
-
-const db = getFirestore(app);
+import useCollection from '@/hooks/useCollection'
+import useDoc from '@/hooks/useDoc'
 
 type FormValues = {
   username: { value: string };
@@ -30,6 +19,8 @@ type FormValues = {
 
 export default function Home() {
   const navigate = useNavigate()
+  const { collectionRef } = useCollection("user")
+  const { getDocRef } = useDoc("user")
 
   async function onSubmit(event: FormEvent) {
     try {
@@ -41,7 +32,7 @@ export default function Home() {
         name: values.username?.value,
       }
 
-      const doc = await addDoc(collection(db, "user"), body);
+      const doc = await addDoc(collectionRef, body);
 
       const data = await getDoc(doc)
 
@@ -67,12 +58,12 @@ export default function Home() {
 
     const user = JSON.parse(stringUser);
 
-    const docSnap = await getDoc(doc(db, "user", user.id))
+    const docSnap = await getDoc(getDocRef(user.id))
 
     if (docSnap.id) {
       navigate('/session', { replace: false })
     }
-  }, [navigate])
+  }, [navigate, getDocRef])
 
   useEffect(() => {
     getData()
