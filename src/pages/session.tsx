@@ -1,6 +1,6 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useContext } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { addDoc, getDoc, onSnapshot } from 'firebase/firestore'
+import { addDoc, arrayUnion, doc, getDoc, onSnapshot, updateDoc } from 'firebase/firestore'
 
 import Deck from "@/components/deck"
 import Header from "@/components/header"
@@ -9,18 +9,21 @@ import NoSessionDialog from '@/components/dialogs/no-session-dialog'
 import useCollection from '@/hooks/useCollection'
 import useAuth from '@/hooks/useAuth'
 import { User } from '@/types'
+import NoUserDialog from '@/components/dialogs/no-user-dialog'
+import { DatabaseContext } from '@/contexts/database'
 
 export default function SessionPage() {
   const navigate = useNavigate()
   const params = useParams() as { token: string }
-  const { user } = useAuth()
+  const { user, getUser } = useAuth()
+  const { db } = useContext(DatabaseContext)
+  const { collectionRef: userCollectionRef } = useCollection("user")
   const { collectionRef } = useCollection("session")
 
   const [isOpen, setIsOpen] = useState(false);
   const [cardSelected, setCardSelected] = useState<number>()
   const [users, setUsers] = useState<User[]>([]);
-
-  console.log({ users })
+  const [loadingCreatingUser, setLoadingCreatingUser] = useState(false)
 
   function onSelectCard(value?: number) {
     setCardSelected(value)
@@ -57,33 +60,75 @@ export default function SessionPage() {
     console.log('Share Session!')
   }
 
+  async function onCreateUser(name: string) {
+    try {
+      setLoadingCreatingUser(true)
+      const body = { name }
+      console.log(body)
+
+      const doc = await addDoc(userCollectionRef, body);
+
+      const data = await getDoc(doc)
+
+      const user = {
+        id: data.id,
+        name: data.data()?.name
+      }
+
+      localStorage.setItem('@planning-poker:user', JSON.stringify(user))
+
+      await getUser()
+      getData();
+    } catch (err) {
+      console.error(err)
+    } finally {
+      setLoadingCreatingUser(false)
+    }
+  }
+
   const getData = useCallback(() => {
     if (!params.token) {
       setIsOpen(true)
       return
     }
 
-    const unsub = onSnapshot(collectionRef, (doc) => {
-      const userList: User[] = []
-      doc.forEach((item) => {
-        console.log(item.id)
+    const unsub = onSnapshot(collectionRef, async (doc) => {
+      let usersList: User[] = []
+
+      doc.forEach(async (item) => {
         if (item.id !== params.token) return;
-        userList.push(item.data()?.users?.[0] as User)
+        usersList = item.data()?.users;
       })
 
-      setUsers(userList)
+      setUsers(usersList)
     })
 
     return unsub
-  }, [collectionRef, params.token])
+  }, [params.token])
 
   useEffect(() => {
+    if (!user) return;
+
     const unsub = getData()
 
     if (!unsub) return;
 
     return () => unsub()
-  }, [getData])
+  }, [getData, user])
+
+  console.log(users)
+
+  useEffect(() => {
+    if (!user || !users.length) return;
+
+    if (users.map(item => item?.id).includes(user?.id)) return;
+
+    (async () => {
+      await updateDoc(doc(db, "session", params.token), {
+        users: arrayUnion(user)
+      })
+    })()
+  }, [users, user, db, params.token])
 
   return (
     <main className="w-screen h-screen flex flex-col justify-between">
@@ -97,6 +142,13 @@ export default function SessionPage() {
         isOpen={isOpen}
         onClose={() => setIsOpen(false)}
         onOpenSession={onOpenSession}
+      />
+
+      <NoUserDialog
+        isOpen={user === null}
+        onClose={() => undefined}
+        onCreateUser={onCreateUser}
+        loading={loadingCreatingUser}
       />
     </main>
   )

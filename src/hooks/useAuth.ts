@@ -7,6 +7,7 @@ import { User } from "@/types";
 function useAuth() {
   const context = useContext(DatabaseContext)
   const [user, setUser] = useState<User | null>(null)
+  const [loading, setLoading] = useState(true)
 
   const getUser = useCallback(async () => {
     const stringUser = localStorage.getItem('@planning-poker:user')
@@ -21,13 +22,15 @@ function useAuth() {
       id: docSnap.id,
       name: docSnap.data()?.name
     });
+
+    setLoading(false)
   }, [context.db])
 
   useEffect(() => {
     getUser()
   }, [getUser])
 
-  return { user, getUser }
+  return { user, getUser, isLoading: loading }
 }
 
 export default useAuth

@@ -9,8 +9,8 @@ const PokerDesk = ({ users = [] }: Props) => {
     <div className="px-10 w-full max-w-[550px] mx-auto">
       <div className="flex justify-between">
         {users.map(user => (
-          <div key={user.id} className="w-fit mx-auto">
-            <span className="text-gray-300">{user.name.split(' ')?.[0] || user.name}</span>
+          <div key={user?.id} className="w-fit mx-auto">
+            <span className="text-gray-300">{user?.name?.split(' ')?.[0] || user?.name}</span>
             <div className="bg-primary-300 rounded-full size-10 mt-1" />
           </div>
         ))}
