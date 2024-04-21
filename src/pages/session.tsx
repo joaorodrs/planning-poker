@@ -19,14 +19,24 @@ export default function SessionPage() {
   const { db } = useContext(DatabaseContext)
   const { collectionRef: userCollectionRef } = useCollection("user")
   const { collectionRef } = useCollection("session")
+  const { collectionRef: votingCollectionRef } = useCollection("voting")
 
   const [isOpen, setIsOpen] = useState(false);
   const [cardSelected, setCardSelected] = useState<number>()
   const [users, setUsers] = useState<User[]>([]);
   const [loadingCreatingUser, setLoadingCreatingUser] = useState(false)
 
-  function onSelectCard(value?: number) {
+  async function onSelectCard(value?: number) {
     setCardSelected(value)
+
+    await addDoc(votingCollectionRef,
+      {
+        createdAt: new Date(),
+        userId: user?.id,
+        sessionId: params.token,
+        vote: value
+      }
+    );
   }
 
   async function onNewSession() {
@@ -115,8 +125,6 @@ export default function SessionPage() {
 
     return () => unsub()
   }, [getData, user])
-
-  console.log(users)
 
   useEffect(() => {
     if (!user || !users.length) return;

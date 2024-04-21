@@ -5,5 +5,13 @@ export interface User {
 
 export interface Session {
   creator: string;
-  users: User[]
+  users: User[];
+}
+
+export interface Voting {
+  id: string;
+  userId: string;
+  sessionId: string;
+  vote: number;
+  createdAt: number;
 }
