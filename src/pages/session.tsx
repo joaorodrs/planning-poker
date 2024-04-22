@@ -24,7 +24,14 @@ export default function SessionPage() {
   const [isOpen, setIsOpen] = useState(false);
   const [cardSelected, setCardSelected] = useState<number>()
   const [users, setUsers] = useState<User[]>([]);
+  const [showCards, setShowCards] = useState(false);
   const [loadingCreatingUser, setLoadingCreatingUser] = useState(false)
+
+  async function onToggleShowCards(reveal: boolean) {
+    await updateDoc(doc(db, "session", params.token), {
+      showCards: reveal
+    })
+  }
 
   async function onSelectCard(value?: number) {
     setCardSelected(value)
@@ -104,13 +111,16 @@ export default function SessionPage() {
 
     const unsub = onSnapshot(collectionRef, async (doc) => {
       let usersList: User[] = []
+      let showCardsStored = false
 
       doc.forEach(async (item) => {
         if (item.id !== params.token) return;
         usersList = item.data()?.users;
+        showCardsStored = item.data()?.showCards
       })
 
       setUsers(usersList)
+      setShowCards(showCardsStored)
     })
 
     return unsub
@@ -142,7 +152,11 @@ export default function SessionPage() {
     <main className="w-screen h-screen flex flex-col justify-between">
       <Header hasToken={!!params.token} onAction={onHeaderAction} />
 
-      <PokerDesk users={users} />
+      <PokerDesk
+        users={users}
+        showCards={showCards}
+        onToggleShowCards={onToggleShowCards}
+      />
 
       <Deck cardSelected={cardSelected} onSelectCard={onSelectCard} />
 
