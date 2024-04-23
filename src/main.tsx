@@ -8,9 +8,10 @@ import {
 import Home from '@/pages/index'
 import Session from '@/pages/session'
 
-import "./index.css";
 import { DatabaseProvider } from "./contexts/database";
 import { Toaster } from "./components/ui/toaster";
+
+import "./index.css";
 
 const router = createBrowserRouter([
   {
