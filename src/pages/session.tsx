@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, useContext } from 'react'
-import { useLocation, useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { addDoc, arrayUnion, doc, getDoc, onSnapshot, updateDoc } from 'firebase/firestore'
 
 import Deck from "@/components/deck"
@@ -15,7 +15,6 @@ import { useToast } from '@/components/ui/use-toast'
 
 export default function SessionPage() {
   const navigate = useNavigate()
-  const location = useLocation()
   const params = useParams() as { token: string }
   const { toast } = useToast()
   const { user, getUser } = useAuth()
