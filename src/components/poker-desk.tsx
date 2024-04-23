@@ -50,7 +50,7 @@ const PokerDesk = ({ users = [], showCards = false, creator, onToggleShowCards }
           <div key={user?.id} className="w-fit mx-auto">
             <span className="text-gray-300">{user?.name?.split(' ')?.[0] || user?.name}</span>
             <div className="bg-primary-300 rounded-full size-10 mt-1 flex justify-center align-center">
-              {showCards && <span className="m-auto text-slate-800 text-xl font-bold">{votings.find(item => item.userId === user?.id)?.vote}</span>}
+              {showCards && <span className="m-auto text-slate-800 text-xl font-bold">{votings.find(item => item.userId === user?.id)?.vote || '?'}</span>}
             </div>
           </div>
         ))}
