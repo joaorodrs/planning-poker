@@ -25,6 +25,7 @@ export default function SessionPage() {
   const [cardSelected, setCardSelected] = useState<number>()
   const [users, setUsers] = useState<User[]>([]);
   const [showCards, setShowCards] = useState(false);
+  const [creator, setCreator] = useState<string>()
   const [loadingCreatingUser, setLoadingCreatingUser] = useState(false)
 
   async function onToggleShowCards(reveal: boolean) {
@@ -112,15 +113,18 @@ export default function SessionPage() {
     const unsub = onSnapshot(collectionRef, async (doc) => {
       let usersList: User[] = []
       let showCardsStored = false
+      let creatorStored = ''
 
       doc.forEach(async (item) => {
-        if (item.id !== params.token) return;
-        usersList = item.data()?.users;
+        if (item.id !== params.token) return
+        usersList = item.data()?.users
         showCardsStored = item.data()?.showCards
+        creatorStored = item.data()?.creator
       })
 
       setUsers(usersList)
       setShowCards(showCardsStored)
+      setCreator(creatorStored)
     })
 
     return unsub
@@ -156,9 +160,14 @@ export default function SessionPage() {
         users={users}
         showCards={showCards}
         onToggleShowCards={onToggleShowCards}
+        creator={creator}
       />
 
-      <Deck cardSelected={cardSelected} onSelectCard={onSelectCard} />
+      <Deck
+        cardSelected={cardSelected}
+        onSelectCard={onSelectCard}
+        isDisabled={showCards}
+      />
 
       <NoSessionDialog
         isOpen={isOpen}

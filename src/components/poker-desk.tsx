@@ -1,3 +1,4 @@
+import useAuth from "@/hooks/useAuth"
 import useCollection from "@/hooks/useCollection"
 import { User, Voting } from "@/types"
 import { onSnapshot } from "firebase/firestore"
@@ -8,10 +9,12 @@ type Props = {
   users: User[]
   showCards?: boolean;
   onToggleShowCards(reveal: boolean): void;
+  creator?: string;
 }
 
-const PokerDesk = ({ users = [], showCards = false, onToggleShowCards }: Props) => {
+const PokerDesk = ({ users = [], showCards = false, creator, onToggleShowCards }: Props) => {
   const params = useParams() as { token: string }
+  const { user } = useAuth()
   const { collectionRef } = useCollection("voting")
   const [votings, setVotings] = useState<Voting[]>([])
 
@@ -54,12 +57,14 @@ const PokerDesk = ({ users = [], showCards = false, onToggleShowCards }: Props) 
       </div>
 
       <div className="bg-primary-300 h-24 w-full my-5 rounded-lg flex align-center justify-center md:h-40">
-        <button
-          className="bg-primary-600 h-fit px-5 py-2 text-sm rounded-lg m-auto font-medium md:text-lg"
-          onClick={() => onToggleShowCards(!showCards)}
-        >
-          {showCards ? 'Esconder' : 'Revelar'} cartas
-        </button>
+        {creator === user?.id && (
+          <button
+            className="bg-primary-600 h-fit px-5 py-2 text-sm rounded-lg m-auto font-medium md:text-lg"
+            onClick={() => onToggleShowCards(!showCards)}
+          >
+            {showCards ? 'Esconder' : 'Revelar'} cartas
+          </button>
+        )}
       </div>
     </div>
   )
