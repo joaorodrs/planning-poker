@@ -62,7 +62,7 @@ export default function Home() {
 
   return (
     <main className="w-screen h-screen flex flex-col justify-between">
-      <Card className="border-none my-auto mx-4">
+      <Card className="border-none my-auto mx-4 md:mx-auto md:w-[350px]">
         <form onSubmit={onSubmit}>
           <CardHeader>
             <CardTitle>Novo por aqui?</CardTitle>
