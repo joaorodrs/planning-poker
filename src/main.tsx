@@ -10,6 +10,7 @@ import Session from '@/pages/session'
 
 import "./index.css";
 import { DatabaseProvider } from "./contexts/database";
+import { Toaster } from "./components/ui/toaster";
 
 const router = createBrowserRouter([
   {
@@ -30,6 +31,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <DatabaseProvider>
       <RouterProvider router={router} />
+      <Toaster />
     </DatabaseProvider>
   </React.StrictMode>
 );

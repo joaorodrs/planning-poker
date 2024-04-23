@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, useContext } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import { addDoc, arrayUnion, doc, getDoc, onSnapshot, updateDoc } from 'firebase/firestore'
 
 import Deck from "@/components/deck"
@@ -11,10 +11,13 @@ import useAuth from '@/hooks/useAuth'
 import { User } from '@/types'
 import NoUserDialog from '@/components/dialogs/no-user-dialog'
 import { DatabaseContext } from '@/contexts/database'
+import { useToast } from '@/components/ui/use-toast'
 
 export default function SessionPage() {
   const navigate = useNavigate()
+  const location = useLocation()
   const params = useParams() as { token: string }
+  const { toast } = useToast()
   const { user, getUser } = useAuth()
   const { db } = useContext(DatabaseContext)
   const { collectionRef: userCollectionRef } = useCollection("user")
@@ -75,7 +78,12 @@ export default function SessionPage() {
   function onHeaderAction(share: boolean) {
     if (!share) return setIsOpen(true)
 
-    console.log('Share Session!')
+    navigator.clipboard.writeText(window.location.href)
+
+    toast({
+      title: 'O link da sessão foi copiado para a área de transferência.',
+      className: 'border-slate-700 bg-slate-900',
+    })
   }
 
   async function onCreateUser(name: string) {
