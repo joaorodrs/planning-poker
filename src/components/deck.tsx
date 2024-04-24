@@ -1,3 +1,5 @@
+import { motion } from 'framer-motion'
+
 import Card from "./card"
 
 type Props = {
@@ -8,7 +10,12 @@ type Props = {
 
 const Deck = ({ cardSelected, isDisabled, onSelectCard }: Props) => {
   return (
-    <div className="mt-20 pb-10">
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="absolute mt-20 pb-10 top-[60%] left-0 right-0 md:bottom-0 md:top-auto"
+    >
       <h1 className="mb-4">Escolha seu card</h1>
 
       <div className="flex flex-wrap justify-center">
@@ -22,7 +29,7 @@ const Deck = ({ cardSelected, isDisabled, onSelectCard }: Props) => {
           />
         ))}
       </div>
-    </div>
+    </motion.div>
   )
 }
 

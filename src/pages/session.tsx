@@ -1,6 +1,19 @@
 import { useState, useEffect, useCallback, useContext } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { addDoc, arrayUnion, doc, getDoc, onSnapshot, updateDoc } from 'firebase/firestore'
+import {
+  addDoc,
+  arrayUnion,
+  collection,
+  deleteDoc,
+  doc,
+  getDoc,
+  getDocs,
+  onSnapshot,
+  query,
+  updateDoc,
+  where
+} from 'firebase/firestore'
+import { AnimatePresence } from 'framer-motion'
 
 import Deck from "@/components/deck"
 import Header from "@/components/header"
@@ -34,6 +47,16 @@ export default function SessionPage() {
     await updateDoc(doc(db, "session", params.token), {
       showCards: reveal
     })
+
+    if (!reveal) {
+      const q = query(collection(db, "voting"), where("sessionId", "==", params.token))
+
+      const querySnapshot = await getDocs(q);
+
+      querySnapshot.forEach(async (item) => {
+        await deleteDoc(doc(db, "voting", item.id));
+      })
+    }
   }
 
   async function onSelectCard(value?: number) {
@@ -159,8 +182,14 @@ export default function SessionPage() {
     })()
   }, [users, user, db, params.token])
 
+  useEffect(() => {
+    if (!showCards) {
+      setCardSelected(undefined);
+    }
+  }, [showCards])
+
   return (
-    <main className="w-screen h-screen flex flex-col justify-between">
+    <main className="relative w-screen h-screen flex flex-col justify-between overflow-x-hidden">
       <Header hasToken={!!params.token} onAction={onHeaderAction} />
 
       <PokerDesk
@@ -170,11 +199,16 @@ export default function SessionPage() {
         creator={creator}
       />
 
-      <Deck
-        cardSelected={cardSelected}
-        onSelectCard={onSelectCard}
-        isDisabled={showCards}
-      />
+      <AnimatePresence>
+        {!showCards ? (
+          <Deck
+            key="deck"
+            cardSelected={cardSelected}
+            onSelectCard={onSelectCard}
+            isDisabled={showCards}
+          />
+        ) : <div />}
+      </AnimatePresence>
 
       <NoSessionDialog
         isOpen={isOpen}
