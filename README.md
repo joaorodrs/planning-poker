@@ -1,30 +1,32 @@
-# React + TypeScript + Vite
+# Planning Poker
+This is a simple Planning Poker built using React w/ Vite and Firebase Firestore.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+### Screenshots
+![image](https://github.com/joaorodrs/planning-poker/assets/64229622/1559e1e3-d88f-4e21-9435-9a7e5f6dd950)
+![image](https://github.com/joaorodrs/planning-poker/assets/64229622/83566abf-95aa-4425-82d0-f26808a48704)
 
-Currently, two official plugins are available:
+# Structure
+- [React JS](https://react.dev/)
+- [Typescript](https://www.typescriptlang.org/)
+- [Vite](https://vitejs.dev/)
+- [Firebase](https://firebase.google.com/)
+- [Shadcn UI](https://ui.shadcn.com/)
+- [TailwindCSS](https://tailwindcss.com/)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+# Design
+Credits for the design are in [this Figma Community project](https://www.figma.com/community/file/1206046713872612614/septia-planning-poker?searchSessionId=lvedca9s-zlhrqid77zb), by [Brenda Matias](https://www.figma.com/@brendamatias).
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
+# How to run
+### Clone the project
+Clone the GitHub repository by running:
+```
+git clone https://github.com/joaorodrs/planning-poke
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+If you want to make any modifications, [make a fork](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo) from this repo and [submit a pull request](https://docs.github.com/pt/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request).
+
+### Install dependencies
+Install all dependencies using `yarn` or `npm i`.
+
+### Run
+Run the project in development mode using `yarn dev` or `npm run dev`.
