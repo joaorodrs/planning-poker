@@ -20,7 +20,7 @@ Credits for the design are in [this Figma Community project](https://www.figma.c
 ### Clone the project
 Clone the GitHub repository by running:
 ```
-git clone https://github.com/joaorodrs/planning-poke
+git clone https://github.com/joaorodrs/planning-poker
 ```
 
 If you want to make any modifications, [make a fork](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo) from this repo and [submit a pull request](https://docs.github.com/pt/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request).
