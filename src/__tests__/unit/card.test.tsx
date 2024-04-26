@@ -2,7 +2,7 @@ import { describe, expect, it, vi } from 'vitest'
 import { render } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
-import Card from '@/components/card'
+import Card from '@/components/deck/card'
 
 describe('Card Component', () => {
   it('renders the card in the screen', () => {
