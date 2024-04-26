@@ -1,5 +1,6 @@
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 import { render } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 
 import Card from '@/components/card'
 
@@ -48,7 +49,7 @@ describe('Card Component', () => {
     ).queryByRole('button')
 
     expect(card).toBeVisible()
-    expect(card).toHaveAttribute('data-is-disabled')
+    expect(card).toHaveAttribute('data-is-disabled', 'true')
   })
 
   it('renders card as selected', () => {
@@ -63,6 +64,27 @@ describe('Card Component', () => {
     ).queryByRole('button')
 
     expect(card).toBeVisible()
-    expect(card).toHaveAttribute('data-is-selected')
+    expect(card).toHaveAttribute('data-is-selected', 'true')
+  })
+
+  it('calls callback function on click', async () => {
+    const user = userEvent.setup()
+    const selectCallback = vi.fn()
+
+    const props = {
+      isSelected: false,
+      onSelectCard: selectCallback,
+      isDisabled: false
+    }
+
+    const card = render(
+      <Card {...props} />
+    ).queryByRole('button')
+
+    expect(card).not.toBe(null)
+
+    await user.click(card as HTMLElement)
+
+    expect(selectCallback.mock.calls.length).toBe(1)
   })
 })
