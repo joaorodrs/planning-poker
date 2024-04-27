@@ -59,7 +59,7 @@ function CardResult({ votings }: CardResultProps) {
         onSelectCard={() => undefined}
         className="cursor-none"
       />
-      <span>{getVotesAmount(vote.vote)} voto{getVotesAmount(vote.vote) > 1 ? 's' : ''}</span>
+      <span data-testid="vote-label">{getVotesAmount(vote.vote)} voto{getVotesAmount(vote.vote) > 1 ? 's' : ''}</span>
     </div>
   ))
 }
