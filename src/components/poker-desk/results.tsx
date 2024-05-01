@@ -25,18 +25,27 @@ function Results({ votings }: Props) {
     >
       <div>
         <h1 className="text-lg">Média:</h1>
-        <div className="m-auto w-fit mt-4">
+        <motion.div
+          initial={{ rotateY: '90deg' }}
+          animate={{ rotateY: '0deg' }}
+          transition={{ duration: 0.5, delay: 1 }}
+          className="m-auto w-fit mt-4"
+        >
           <Card
             isSelected
             isDisabled
             value={average}
             onSelectCard={() => undefined}
           />
-        </div>
+        </motion.div>
       </div>
-      <div className="flex flex-wrap align-center justify-center w-full">
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        className="flex flex-wrap align-center justify-center w-full"
+      >
         <CardResult votings={uniqueCardsVotings} />
-      </div>
+      </motion.div>
     </motion.div>
   )
 }

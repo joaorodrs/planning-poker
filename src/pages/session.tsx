@@ -13,7 +13,6 @@ import {
   updateDoc,
   where
 } from 'firebase/firestore'
-import { AnimatePresence } from 'framer-motion'
 
 import Deck from "@/components/deck"
 import Header from "@/components/header"
@@ -199,16 +198,13 @@ export default function SessionPage() {
         creator={creator}
       />
 
-      <AnimatePresence>
-        {!showCards ? (
-          <Deck
-            key="deck"
-            cardSelected={cardSelected}
-            onSelectCard={onSelectCard}
-            isDisabled={showCards}
-          />
-        ) : <div />}
-      </AnimatePresence>
+      <Deck
+        key="deck"
+        cardSelected={cardSelected}
+        onSelectCard={onSelectCard}
+        isDisabled={showCards}
+        showCards={showCards}
+      />
 
       <NoSessionDialog
         isOpen={isOpen}
