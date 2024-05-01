@@ -1,0 +1,79 @@
+[
+  {
+    "id": "1",
+    "userId": "placeholder",
+    "sessionId": "placeholder",
+    "vote": 4,
+    "createdAt": 0
+  },
+  {
+    "id": "1",
+    "userId": "placeholder",
+    "sessionId": "placeholder",
+    "vote": 4,
+    "createdAt": 0
+  },
+  {
+    "id": "2",
+    "userId": "placeholder",
+    "sessionId": "placeholder",
+    "vote": 8,
+    "createdAt": 0
+  },
+  {
+    "id": "3",
+    "userId": "placeholder",
+    "sessionId": "placeholder",
+    "vote": 6,
+    "createdAt": 0
+  },
+  {
+    "id": "4",
+    "userId": "placeholder",
+    "sessionId": "placeholder",
+    "vote": 5,
+    "createdAt": 0
+  },
+  {
+    "id": "5",
+    "userId": "placeholder",
+    "sessionId": "placeholder",
+    "vote": 4,
+    "createdAt": 0
+  },
+  {
+    "id": "6",
+    "userId": "placeholder",
+    "sessionId": "placeholder",
+    "vote": 9,
+    "createdAt": 0
+  },
+  {
+    "id": "7",
+    "userId": "placeholder",
+    "sessionId": "placeholder",
+    "vote": 5,
+    "createdAt": 0
+  },
+  {
+    "id": "8",
+    "userId": "placeholder",
+    "sessionId": "placeholder",
+    "vote": 5,
+    "createdAt": 0
+  },
+  {
+    "id": "9",
+    "userId": "placeholder",
+    "sessionId": "placeholder",
+    "vote": 8,
+    "createdAt": 0
+  },
+  {
+    "id": "10",
+    "userId": "placeholder",
+    "sessionId": "placeholder",
+    "vote": 10,
+    "createdAt": 0
+  }
+]
