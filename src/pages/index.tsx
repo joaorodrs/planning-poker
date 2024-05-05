@@ -12,6 +12,7 @@ import useAuth from '@/hooks/useAuth'
 
 
 import '@/App.css'
+import { GithubIcon } from 'lucide-react'
 
 type FormValues = {
   username: { value: string };
@@ -70,7 +71,7 @@ export default function Home() {
           <CardContent>
             <Input name="username" placeholder="Qual o seu nome?" />
           </CardContent>
-          <CardFooter>
+          <CardFooter className="flex-col">
             <Button
               className="bg-primary-400 text-black mt-1 w-full"
               size="sm"
@@ -78,6 +79,14 @@ export default function Home() {
             >
               Enviar
             </Button>
+            <a
+              aria-label="Github"
+              href="https://github.com/joaorodrs/planning-poker"
+              target='_blank'
+              className="mx-auto mt-8 text-white p-4 m-2 rounded-xl hover:text-primary-500 hover:bg-white/10"
+            >
+              <GithubIcon />
+            </a>
           </CardFooter>
         </form>
       </Card>
